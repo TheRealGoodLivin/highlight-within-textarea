@@ -106,7 +106,6 @@ const HighlightWithinTextarea = (function() {
 			}
 		},
 
-		// TODO
 		// Firefox doesn't show text that scrolls into the padding of a textarea, so
 		// rearrange a couple box models to make highlights behave the same way
 		fixFirefox: function() {
@@ -129,7 +128,6 @@ const HighlightWithinTextarea = (function() {
 			});
 		},
 
-		// TODO
 		// iOS adds 3px of (unremovable) padding to the left and right of a textarea,
 		// so adjust highlights div to match
 		fixIOS: function() {

@@ -1,4 +1,5 @@
-Copyright (c) 2016 Will Boyd
+Copyright (c) 2016 Will Boyd <br>
+Portions Copyright © 2018 Matthieu Felix
 
 This software is released under the MIT license: http://opensource.org/licenses/MIT
 
