@@ -5,7 +5,7 @@
  * @github  https://github.com/lonekorean/highlight-within-textarea
  */
 
-(function($) {
+const HighlightWithinTextarea = (function() {
 	let ID = 'hwt';
 
 	let HighlightWithinTextarea = function(el, config) {
@@ -14,7 +14,7 @@
 
 	HighlightWithinTextarea.prototype = {
 		init: function(el, config) {
-			this.el = el[0];
+			this.el = el;
 
 			// backwards compatibility with v1 (deprecated)
 			if (this.getType(config) === 'function') {
@@ -54,12 +54,9 @@
 		},
 
 		generate: function() {
-			console.log(this.el);
 			this.el.classList.add(ID + '-input', ID + '-content');
-			this.el.addEventListener('input.' + ID, this.handleInput.bind(this));
-			this.el.addEventListener('scroll.' + ID, this.handleScroll.bind(this));
-
-			// TODO instead of calling on `document`, do it on the root element
+			this.el.addEventListener('input', this.handleInput.bind(this));
+			this.el.addEventListener('scroll', this.handleScroll.bind(this));
 
 			this.highlights = document.createElement('div');
 			this.highlights.classList.add(ID + '-highlights', ID + '-content');
@@ -113,45 +110,31 @@
 		// Firefox doesn't show text that scrolls into the padding of a textarea, so
 		// rearrange a couple box models to make highlights behave the same way
 		fixFirefox: function() {
-			return;
 			// take padding and border pixels from highlights div
-			let padding = this.highlights.css([
-				'padding-top', 'padding-right', 'padding-bottom', 'padding-left'
-			]);
-			let border = this.highlights.css([
-				'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width'
-			]);
-			this.highlights.css({
-				'padding': '0',
-				'border-width': '0'
-			});
+			const highlightsStyle = getComputedStyle(this.highlights);
 
-			this.backdrop
-				.css({
-					// give padding pixels to backdrop div
-					'margin-top': '+=' + padding['padding-top'],
-					'margin-right': '+=' + padding['padding-right'],
-					'margin-bottom': '+=' + padding['padding-bottom'],
-					'margin-left': '+=' + padding['padding-left'],
-				})
-				.css({
-					// give border pixels to backdrop div
-					'margin-top': '+=' + border['border-top-width'],
-					'margin-right': '+=' + border['border-right-width'],
-					'margin-bottom': '+=' + border['border-bottom-width'],
-					'margin-left': '+=' + border['border-left-width'],
-				});
+			let padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left']
+				.map(p => highlightsStyle[p]);
+			let border = ['border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width']
+				.map(p => highlightsStyle[p]);
+
+			let marginProperties = ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'];
+
+			this.highlights.style.padding = 0;
+			this.highlights.style.borderWidth = 0;
+
+			marginProperties.forEach((p, i) => {
+				this.backdrop.style[p] =
+					"calc(" + getComputedStyle(this.backdrop)[p] + " + " + padding[i] + " + " + border[i] + ")";
+			});
 		},
 
 		// TODO
 		// iOS adds 3px of (unremovable) padding to the left and right of a textarea,
 		// so adjust highlights div to match
 		fixIOS: function() {
-			return;
-			this.highlights.css({
-				'padding-left': '+=3px',
-				'padding-right': '+=3px'
-			});
+			this.highlights.style['padding-left'] = "calc(" + getComputedStyle(this.highlights)['padding-left'] + " + 3px)";
+			this.highlights.style['padding-right'] = "calc(" + getComputedStyle(this.highlights)['padding-right'] + " + 3px)";
 		},
 
 		handleInput: function() {
@@ -344,48 +327,7 @@
 		blockContainerScroll: function() {
 			this.container.scrollLeft = 0;
 		},
-
-		// TODO
-		destroy: function() {
-			this.backdrop.remove();
-			this.el
-				.unwrap()
-				.removeClass(ID + '-text ' + ID + '-input')
-				.off(ID)
-				.removeData(ID);
-		},
 	};
 
-	// register the jQuery plugin
-	$.fn.highlightWithinTextarea = function(options) {
-		return this.each(function() {
-			let $this = $(this);
-			let plugin = $this.data(ID);
-
-			if (typeof options === 'string') {
-				if (plugin) {
-					switch (options) {
-						case 'update':
-							plugin.handleInput();
-							break;
-						case 'destroy':
-							plugin.destroy();
-							break;
-						default:
-							console.error('unrecognized method string');
-					}
-				} else {
-					console.error('plugin must be instantiated first');
-				}
-			} else {
-				if (plugin) {
-					plugin.destroy();
-				}
-				plugin = new HighlightWithinTextarea($this, options);
-				if (plugin.isGenerated) {
-					$this.data(ID, plugin);
-				}
-			}
-		});
-	};
-})(jQuery);
+	return HighlightWithinTextarea;
+})();

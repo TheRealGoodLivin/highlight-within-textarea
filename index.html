@@ -5,7 +5,6 @@
 		<title>Highlight Within Textarea</title>
 
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Droid+Sans+Mono" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 		<!-- highlight-within-textarea CSS/JS -->
 		<link href="highlight-within-textarea.css" rel="stylesheet">
@@ -108,8 +107,8 @@
 			<p>Note that this is case-insensitive.</p>
 			<textarea class="string-example">Potato potato tomato potato.</textarea>
 			<script>
-$('.string-example').highlightWithinTextarea({
-    highlight: 'potato'
+new HighlightWithinTextarea(document.querySelector('.string-example'), {
+	highlight: 'potato'
 });
 			</script>
 		</section>
@@ -119,8 +118,8 @@ $('.string-example').highlightWithinTextarea({
 			<p>Don't forget the <code>g</code> (find all) and <code>i</code> (case-insensitive) flags if you need them.</p>
 			<textarea class="regex-example">Dog, cat, chicken, goose. Dogs, cats, chickens, geese.</textarea>
 			<script>
-$('.regex-example').highlightWithinTextarea({
-    highlight: /dogs?|cats?|g(oo|ee)se/gi
+new HighlightWithinTextarea(document.querySelector('.regex-example'), {
+	highlight: /dogs?|cats?|g(oo|ee)se/gi
 });
 			</script>
 		</section>
@@ -130,8 +129,8 @@ $('.regex-example').highlightWithinTextarea({
 			<p>An array of exactly two numbers is treated as a range. Highlighting starts at the first character index (inclusive) and ends at the second character index (exclusive).</p>
 			<textarea class="range-example">abcdefgh</textarea>
 			<script>
-$('.range-example').highlightWithinTextarea({
-    highlight: [2, 6]
+new HighlightWithinTextarea(document.querySelector('.range-example'), {
+	highlight: [2, 6]
 });
 			</script>
 		</section>
@@ -141,12 +140,12 @@ $('.range-example').highlightWithinTextarea({
 			<p>You can highlight multiple things, using any types mentioned here, with an array.</p>
 			<textarea class="array-example">apple watermelon banana orange mango</textarea>
 			<script>
-$('.array-example').highlightWithinTextarea({
-    highlight: [
-        'orange',
-        /ba(na)*/gi,
-        [0, 5]
-    ]
+new HighlightWithinTextarea(document.querySelector('.array-example'), {
+	highlight: [
+		'orange',
+		/ba(na)*/gi,
+		[0, 5]
+	]
 });
 			</script>
 		</section>
@@ -167,8 +166,8 @@ function getSmileyDayString(input) {
     }
 }
 
-$('.function-example').highlightWithinTextarea({
-    highlight: getSmileyDayString
+new HighlightWithinTextarea(document.querySelector('.function-example'), {
+	highlight: getSmileyDayString
 });
 			</script>
 		</section>
@@ -178,21 +177,21 @@ $('.function-example').highlightWithinTextarea({
 			<p>Any type mentioned here can be put in an object wrapper with <code>highlight</code> and <code>className</code> properties. This lets you set CSS classes in the highlight markup for custom styling, such as changing the highlight color.</p>
 			<textarea class="class-example">Here's a blueberry. There's a strawberry. Surprise, it's a banananana!</textarea>
 			<script>
-$('.class-example').highlightWithinTextarea({
-    highlight: [
-        {
-            highlight: 'strawberry',
-            className: 'red'
-        },
-        {
-            highlight: 'blueberry',
-            className: 'blue'
-        },
-        {
-            highlight: /ba(na)*/gi,
-            className: 'yellow'
-        }
-    ]
+new HighlightWithinTextarea(document.querySelector('.class-example'), {
+	highlight: [
+		{
+			highlight: 'strawberry',
+			className: 'red'
+		},
+		{
+			highlight: 'blueberry',
+			className: 'blue'
+		},
+		{
+			highlight: /ba(na)*/gi,
+			className: 'yellow'
+		}
+	]
 });
 			</script>
 		</section>
