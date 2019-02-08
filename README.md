@@ -13,7 +13,7 @@ A native textarea element is used and familiar behavior (auto-correct, scrolling
 To start, call `highlightWithinTextarea()`, passing in a textarea and a config object.
 
 ```javascript
-const highlighter = highlightWithinTextarea(myTextarea, {
+const highlighter = new HighlightWithinTextarea(myTextarea, {
     highlight: whatever // string, regexp, array, function, or custom object
 });
 ```
