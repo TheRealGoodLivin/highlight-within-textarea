@@ -319,6 +319,14 @@ const HighlightWithinTextarea = (function() {
 			let scrollLeft = this.el.scrollLeft;
 			this.backdrop.style.transform = (scrollLeft > 0) ? 'translateX(' + -scrollLeft + 'px)' : '';
 		},
+		
+		destroy: function() {
+			this.backdrop.remove();
+			this.el.className = this.el.className.replace(/ID + '-text ' + ID + '-input'/, "");
+			this.container.insertAdjacentElement('afterend', this.el)
+			this.container.remove();
+			this.el.replaceWith(this.el.cloneNode(true));
+		},
 
 		// in Chrome, page up/down in the textarea will shift stuff within the
 		// container (despite the CSS), this immediately reverts the shift
