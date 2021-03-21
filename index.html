@@ -195,5 +195,34 @@ new HighlightWithinTextarea(document.querySelector('.class-example'), {
 });
 			</script>
 		</section>
+		
+		<section>
+			<h2>Destory Textarea Highlight</h2>
+			<p>Just a simple example of .destroy()</p>
+			<textarea class="destroy-example">Here's a blueberry. There's a strawberry. Surprise, it's a banananana!</textarea>
+			<button type="button" onclick="destroyExample();">Destroy Highlight</button>
+			<script>
+let highlighter = new HighlightWithinTextarea(document.querySelector('.destroy-example'), {
+	highlight: [
+		{
+			highlight: 'strawberry',
+			className: 'red'
+		},
+		{
+			highlight: 'blueberry',
+			className: 'blue'
+		},
+		{
+			highlight: /ba(na)*/gi,
+			className: 'yellow'
+		}
+	]
+});
+				
+function destroyExample() {
+	highlighter.destroy();
+}
+			</script>
+		</section>
 	</body>
 </html>
