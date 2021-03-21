@@ -22,7 +22,9 @@ The `highlight` property accepts several different types of values to describe w
 
 ## Styling
 
-**The jQuery version has a [demo page](https://lonekorean.github.io/highlight-within-textarea/)** with some sample styling (view source to see the CSS). The configuration is exactly the same for this jQuery-free version.
+**The vanilla version has a [demo page](https://therealgoodlivin.github.io/highlight-within-textarea/)** and is the same configuration jQuery version.
+
+**The jQuery version has a [demo page](https://lonekorean.github.io/highlight-within-textarea/)** with some sample styling (view source to see the CSS). 
 
 There are some guidelines for getting your styles in the right places. Here are the classes you'll want to use.
 
