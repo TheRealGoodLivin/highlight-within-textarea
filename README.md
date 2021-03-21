@@ -62,3 +62,10 @@ Highlighting will automatically be updated as the user edits the contents of the
 ```javascript
 highlighter.handleInput()
 ```
+
+## Destroying
+
+You can remove the plugin from a textarea with this. This will remove all events triggers that have been applied to the textarea.
+```javascript
+highlighter.destroy()
+```
